@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Color Mixer Widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/widget-page.css">
+
+<style>
+.color-preview{
+  width:100%;
+  height:120px;
+  border-radius:8px;
+  margin:1.2em 0;
+  border:2px solid var(--neutral-200);
+  transition:background-color .1s
+}
+
+.slider-label{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:.4em;
+  font-weight:600
+}
+
+input[type=range]{
+  width:100%;
+  cursor:pointer
+}
+
+.text{
+  text-align:center
+}
+
+.text h1{
+  background:linear-gradient(90deg, red, cyan, magenta, yellow);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin:0
+}
+
+  .variable-display{
+    margin:1em 0;
+    padding:1em;
+    border:2px dashed var(--neutral-300);
+    border-radius:8px;
+    font-weight:600;
+    text-align:center
+  }
+
+body{
+  padding:18px;
+  font-family:"Poppins",system-ui,Arial
+}
+
+</style>
+</head>
+<body>
+<div style="max-width:640px;margin:0 auto">
+  <section class="text">
+    <h1>Color Mixer!</h1>
+    <h3 style="margin:.4em 0">Learn how computers use <strong>variables</strong> to create colors.</h3>
+    <p style="margin:.2em 0 .8em">Move the sliders to change the stored values of the Red, Green, and Blue variables!</p>
+  </section>
+
+  <section>
+    <div class="variable-display">
+      Red variable = <span id="redVar">128</span>,
+      Green variable = <span id="greenVar">128</span>,
+      Blue variable = <span id="blueVar">128</span>
+    </div>
+
+    <div class="color-preview" id="colorBox"></div>
+
+    <div class="slider-group">
+      <div class="slider-label"><span>Red</span><span id="redValue">128</span></div>
+      <input type="range" id="redSlider" min="0" max="255" value="128">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label"><span>Green</span><span id="greenValue">128</span></div>
+      <input type="range" id="greenSlider" min="0" max="255" value="128">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label"><span>Blue</span><span id="blueValue">128</span></div>
+      <input type="range" id="blueSlider" min="0" max="255" value="128">
+    </div>
+
+    <button class="button-semantic button-secondary" id="resetBtn" style="margin-top:.6rem">Reset</button>
+  </section>
+
+  <section style="margin-top:1rem">
+    <h3>Let's Review: What is a Variable?</h3>
+    <p style="margin:.2em 0">A variable is like a box that stores a number. Here, <strong>Red</strong>, <strong>Green</strong>, and <strong>Blue</strong> are variables.</p>
+    <p style="margin:.2em 0"><strong>Challenge: </strong> How can you change the stored values of Red and Blue to create violet (deep purple)?</p>
+  </section>
+</div>
+
+<script>
+const colorBox=document.getElementById('colorBox');
+const redSlider=document.getElementById('redSlider'), greenSlider=document.getElementById('greenSlider'), blueSlider=document.getElementById('blueSlider');
+const redValue=document.getElementById('redValue'), greenValue=document.getElementById('greenValue'), blueValue=document.getElementById('blueValue');
+const redVar=document.getElementById('redVar'), greenVar=document.getElementById('greenVar'), blueVar=document.getElementById('blueVar');
+const resetBtn=document.getElementById('resetBtn');
+
+function updateColor(){
+  const r=+redSlider.value, g=+greenSlider.value, b=+blueSlider.value;
+  colorBox.style.backgroundColor=`rgb(${r}, ${g}, ${b})`;
+  redValue.textContent=r; 
+  greenValue.textContent=g; 
+  blueValue.textContent=b;
+  redVar.textContent=r;
+  greenVar.textContent=g; 
+  blueVar.textContent=b;
+}
+
+redSlider.addEventListener('input',updateColor);
+greenSlider.addEventListener('input',updateColor);
+blueSlider.addEventListener('input',updateColor);
+resetBtn.addEventListener('click',()=>{
+  redSlider.value=greenSlider.value=blueSlider.value=128;
+  updateColor();
+});
+
+updateColor();
+</script>
+</body>
+</html>
